@@ -5,6 +5,7 @@
             <ul class="menu">
                 <li :class="{active:active === '/'}"><router-link to="/">首页</router-link></li>
                 <li :class="{active:active === '/start'}"><router-link to="/start">建站</router-link></li>
+                <li :class="{active:active === '/frontFaq'}"><router-link to="/frontFaq">前端faq</router-link></li>
                 <li :class="{active:active === '/about'}"><router-link to="/about">关于</router-link></li>
             </ul>
         </div>

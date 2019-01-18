@@ -1,4 +1,3 @@
-
 body, html, #main {
   width: 100vw;
   min-width: 500px;
@@ -66,14 +65,5 @@ li {
 .menu .active a {
       color: #54c1ff !important;
       font-weight: 600;
-}
-
-
-img {
-  display: block;
-  width: 400px;
-}
-p {
-  line-height: 1.5;
 }
 

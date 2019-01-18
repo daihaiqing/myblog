@@ -5,32 +5,26 @@ import Router from 'vue-router';
 // import start from './src/views/start.vue';
 // import frontFaq from './src/views/FrontToEnd-faq.vue';
 
+
+//懒加载 按需加载
 Vue.use(Router);
 export default new Router({
     routes:[
         {
             path:'/',
-            component:require.ensure([], (require) => {
-                require('./src/views/home.vue');
-            })
+            component: r => require.ensure([], () => r(require('./src/views/home.vue')), 'home')
         },
         {
             path:'/about',
-            component:require.ensure([], (require) => {
-                require('./src/views/about.vue');
-            })
+            component: r => require.ensure([], () => r(require('./src/views/about.vue')), 'about')
         },
         {
             path:'/frontFaq',
-            component:require.ensure([], (require) => {
-                require('./src/views/FrontToEnd-faq.vue');
-            })
+            component: r => require.ensure([], () => r(require('./src/views/FrontToEnd-faq.vue')), 'FrontToEnd-faq')
         },
         {
             path:'/start',
-            component:require.ensure([], (require) => {
-                require('./src/views/start.vue');
-            })
+            component: r => require.ensure([], () => r(require('./src/views/start.vue')), 'start')
         }
     ]
 });

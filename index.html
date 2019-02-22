@@ -2,6 +2,66 @@
     <head>
         <meta charset="utf-8" />
         <title>糖醋蒜</title>
+        <!-- 监测是否开启script -->
+        <noscript>你的浏览器不支持javascript！</noscript>
+        <script>
+            window.onload = function () {
+                //监测摄像头和麦克风是否支持
+                navigator.getUserMedia = navigator.getUserMedia ||
+                                navigator.webkitGetUserMedia ||
+                                navigator.mozGetUserMedia ||
+                                navigator.msGetUserMedia;
+                                
+                if(navigator.getUserMedia){
+                    shower.innerHTML = "支持调取摄像头麦克风"
+                } else {
+                    shower.innerHTML = "抱歉不支持"
+                }
+
+                // 想要支持 区分麦克风和摄像头权限必须尝试打开进行验证
+
+                // let type = [{video: true},{audio:true}];
+                // type.forEach(item=>{
+                //     navigator.getUserMedia(item, ()=>{}, function onError(error) {
+                //         console.error("没有开启：",Object.keys(item));
+                //     });
+                // });
+
+                // 监测 notification
+                if(window.Notification.permission !== 'granted'){
+                    console.error("没有开启notification");
+                }
+
+                //监测浏览器缩放情况  可放在resize中
+                let detectZoom =()=>{ 
+                    var ratio = 0,
+                        screen = window.screen,
+                        ua = navigator.userAgent.toLowerCase();
+                    
+                    if (window.devicePixelRatio !== undefined) {
+                        ratio = window.devicePixelRatio;
+                    }
+                    else if (~ua.indexOf('msie')) { 
+                        // ie 的计算方式 
+                        if (screen.deviceXDPI && screen.logicalXDPI) {
+                        ratio = screen.deviceXDPI / screen.logicalXDPI;
+                        }
+                    }
+                    else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+                        // 以上两种方式都不支持的浏览器
+                        ratio = window.outerWidth / window.innerWidth;
+                    }
+                    
+                    if (ratio){
+                        ratio = Math.round(ratio * 100);
+                    }
+                    
+                    return ratio;
+                };
+
+                console.error(detectZoom());
+            }
+        </script>
         <link rel="shortcut icon"type="image/x-icon"href="./favicon.ico" />
         <script type="text/javascript" src="./record.js"></script>
     </head>

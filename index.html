@@ -7,16 +7,16 @@
         <script>
             window.onload = function () {
                 //监测摄像头和麦克风是否支持
-                navigator.getUserMedia = navigator.getUserMedia ||
-                                navigator.webkitGetUserMedia ||
-                                navigator.mozGetUserMedia ||
-                                navigator.msGetUserMedia;
+                // navigator.getUserMedia = navigator.getUserMedia ||
+                //                 navigator.webkitGetUserMedia ||
+                //                 navigator.mozGetUserMedia ||
+                //                 navigator.msGetUserMedia;
                                 
-                if(navigator.getUserMedia){
-                    shower.innerHTML = "支持调取摄像头麦克风"
-                } else {
-                    shower.innerHTML = "抱歉不支持"
-                }
+                // if(navigator.getUserMedia){
+                //     shower.innerHTML = "支持调取摄像头麦克风"
+                // } else {
+                //     shower.innerHTML = "抱歉不支持"
+                // }
 
                 // 想要支持 区分麦克风和摄像头权限必须尝试打开进行验证
 

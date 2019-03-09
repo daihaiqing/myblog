@@ -6,6 +6,7 @@
         <input @click="playRecording()" type="button" value="播放" />
         <input @click="uploadAudio()" type="button" value="提交" />
         <input @click="cancelAudio()" type="button" value="取消" />
+        <p @click="testnotification">测试notificaiton</p>
     </div>
 </template>
 
@@ -54,6 +55,15 @@ export default {
                     break;
             }
         });
+    },
+    testnotification(){
+        Notification.requestPermission(function (status) {
+            if (status === "granted") {
+                var n = new Notification("Hi!");
+            } else {
+                alert("你禁止了notificaiton");
+            }
+        })
     }
   },
   mounted(){

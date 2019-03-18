@@ -36,20 +36,20 @@ module.exports = {
         new EncodingPlugin({
             encoding: 'utf-8'
         }),
-        // new ExtractTextPlugin("./sdsdsd/[name].css"),
-        new MiniCssExtractPlugin({
-            filename: "css/[name].css",
-            chunkFilename: "[id].css"
-        }),
         new CleanWebpackPlugin(
             //['dist/js/main.*.js','dist/js/about.*.js','dist/js/FrontToEnd-faq.*.js','dist/js/home.*.js','dist/js/start.*.js'],　 //匹配删除的文件 没添加新文件都要配置 看是否有更好的方案
-            ['./dist/js'],
+            ['./dist/js','./dist/css','./dist/images'],// 同时删除图片文件可能有一些慢
             {
                 root: __dirname,       　　　　　　　　　　//根目录
                 verbose:  true,        　　　　　　　　　　//开启在控制台输出信息
                 dry:      false        　　　　　　　　　　//启用删除文件
             }
-        )
+        ),
+        // new ExtractTextPlugin("./sdsdsd/[name].css"),
+        new MiniCssExtractPlugin({// 抽取样式
+            filename: "css/[name].[chunkhash:8].css", // 打包出来的主文件名
+            chunkFilename: "css/[name].[chunkhash:8].css" // 异步模块，或懒加载模块 命名
+        }),
     ],
     resolve: {
         alias: { 'vue$': 'vue/dist/vue.common.js' }, //解决 [Vue warn]: Failed to mount component: template or render function not defined.
@@ -77,7 +77,7 @@ module.exports = {
             },
             {
                 test: /.(jpg|png|gif|svg)$/,
-                use: ['url-loader?limit=8192&name=images/[name].[ext]'],//还可以通过 name 字段来指 超过limit 的图片打包成base64
+                use: ['url-loader?limit=8192&name=images/[name].[hash].[ext]'],//还可以通过 name 字段来指 超过limit 的图片打包成base64
             },
         ]
     },

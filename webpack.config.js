@@ -42,7 +42,8 @@ module.exports = {
             chunkFilename: "[id].css"
         }),
         new CleanWebpackPlugin(
-            ['dist/js/main.*.js','dist/js/about.*.js','dist/js/FrontToEnd-faq.*.js','dist/js/home.*.js','dist/js/start.*.js'],　 //匹配删除的文件 没添加新文件都要配置 看是否有更好的方案
+            //['dist/js/main.*.js','dist/js/about.*.js','dist/js/FrontToEnd-faq.*.js','dist/js/home.*.js','dist/js/start.*.js'],　 //匹配删除的文件 没添加新文件都要配置 看是否有更好的方案
+            ['./dist/js'],
             {
                 root: __dirname,       　　　　　　　　　　//根目录
                 verbose:  true,        　　　　　　　　　　//开启在控制台输出信息

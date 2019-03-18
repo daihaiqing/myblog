@@ -7,7 +7,6 @@
         <input @click="uploadAudio()" type="button" value="提交" />
         <input @click="cancelAudio()" type="button" value="取消" />
         <p @click="testnotification">测试notificaiton</p>
-        hello
     </div>
 </template>
 

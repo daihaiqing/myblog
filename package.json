@@ -42,6 +42,11 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-encoding-plugin": "^0.2.1",
-    "https-proxy-agent": ">=2.2.0"
+    "https-proxy-agent": ">=2.2.0",
+    "mime": ">=1.4.1",
+    "semver": ">=4.3.2",
+    "qs": ">=1.0.0",
+    "superagent": ">=3.7.0",
+    "tar": ">=2.0.0"
   }
 }

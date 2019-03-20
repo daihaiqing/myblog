@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const EncodingPlugin = require('webpack-encoding-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');//保留最新包
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // 引入css 单独打包插件
 // const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -11,12 +12,14 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 let ENV = require('minimist')(process.argv.slice(2)).env;
 let filename = '';
 
+var drop_console = false;
 if(ENV === "development") {
     console.log("你正在使用开发环境");
     filename = 'js/[name].js';
 }else if(ENV === "production"){
     console.log("正式环境");
     filename = 'js/[name].[chunkHash:5].js';
+    drop_console = true;
 }
 
 module.exports = {
@@ -51,6 +54,20 @@ module.exports = {
             chunkFilename: "css/[name].[chunkhash:8].css" // 异步模块，或懒加载模块 命名
         }),
     ],
+    optimization: {
+        minimizer: [new UglifyJsPlugin({
+            uglifyOptions: {
+                beautify: false,// 最紧凑的输出
+                comments: false, // 删除所有的注释
+                compress: {
+                    warnings: false,// 在UglifyJs删除没有用到的代码时不输出警告
+                    drop_console,// 删除所有的 `console` 语句// 还可以兼容ie浏览器
+                    collapse_vars: true,// 内嵌定义了但是只用到一次的变量
+                    reduce_vars: true,// 提取出出现多次但是没有定义成变量去引用的静态值
+                }
+            }
+        })],
+    },
     resolve: {
         alias: { 'vue$': 'vue/dist/vue.common.js' }, //解决 [Vue warn]: Failed to mount component: template or render function not defined.
         extensions: ['.js', '.vue']

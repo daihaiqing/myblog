@@ -1,9 +1,11 @@
 $font-normal-color:rgb(30, 228, 178);
+$font-content-color:black;
 body,html,#main{
     width: 100vw;
     min-width: 500px;
     height: 100vh;
     color:	$font-normal-color;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 body,html,#main,a,p,div,ul,header,li{
     box-sizing: border-box;
@@ -22,14 +24,14 @@ li{
     display: flex;
     align-items: flex-start;
     .nav-box{
-        min-width: 140px;
-        flex-grow:1;
+        width: 200px;
+        flex-grow:0;
         flex-shrink:0;
     }
     .router{
-        min-width:800px;
-        flex-grow:3;
-        flex-shrink:0;
+        min-width:700px;
         padding-left: 20px;
+        box-sizing: border-box;
+        color:$font-content-color;
     }
 }

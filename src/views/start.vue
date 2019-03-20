@@ -29,12 +29,15 @@
         <h2>最后一步，就是上传自己的网站就可以了</h2>
         <p>开启服务器的FTP，我用的是WinSCP</p>
         <img src="../../images/start/eleventh.png">
+        <p>如果是mac 的话可以考虑用 FileZilla</p>
+        <img src="../../images/start/twelfth.png">
     </div>
 </template>
 <style>
 img{
     display: block;
     width: 400px;
+    padding:20px 0;
 }
 p{
     line-height: 1.5;

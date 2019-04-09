@@ -1,3 +1,7 @@
+/**
+ * sevivceworker
+ */
+
 // var xhr=new XMLHttpRequest();
 // // self.localStorage.wed = 'value';
 // console.error('inner',self);
@@ -111,30 +115,88 @@
 
 // }
 
-const ports = [];
+// const ports = [];
 
-let abc = 1;
-onconnect = e => {
-  const port = e.ports[0]
-  ports.push(port);
-  // console.error(ports)
-  port.onmessage = evt => {
-        const request = new XMLHttpRequest();
-        request.onreadystatechange=function(){
-            if(request.readyState ===4 ){
-                console.error(request);
-                abc+=1;
-                if(abc%2 === 1){
-                  ports.forEach(p => {
-                    p.postMessage(abc);
-                  })
-                }
-            }
-        };
+// let abc = 1;
+// onconnect = e => {
+//   const port = e.ports[0]
+//   ports.push(port);
+//   // console.error(ports)
+//   port.onmessage = evt => {
+//         const request = new XMLHttpRequest();
+//         request.onreadystatechange=function(){
+//             if(request.readyState ===4 ){
+//                 console.error(request);
+//                 abc+=1;
+//                 if(abc%2 === 1){
+//                   ports.forEach(p => {
+//                     p.postMessage(abc);
+//                   })
+//                 }
+//             }
+//         };
 
-      setInterval(()=>{
-        request.open("get","haiqing.api",true);
-        request.send(null);
-      },2000);
-  }
+//       setInterval(()=>{
+//         request.open("get","haiqing.api",true);
+//         request.send(null);
+//       },2000);
+//   }
+// }
+
+
+
+/**
+ * webworker
+ */
+
+// onmessage = function(e) {//接收主线程的信息 messageevent
+//     console.log('Message received from main script');
+//     var workerResult = 'Result: ' + (e.data.name) + ',self:' + self.name;
+//     console.log('Posting message back to main script');
+//     // postMessage(workerResult);// 处理完以后返回给主线程的信息
+//     postMessage(location.href);
+// }
+
+// // setTimeout(()=>{
+// //     postMessage('我要结束了');
+// //     self.close();
+// // },10000)
+
+
+/**
+ * shareworker
+ */
+
+let count = 0; // 可以看出是共享的
+let ports = [];
+let intervalid = null;
+onconnect = function(e) {
+    var port = e.ports[0];
+    clearInterval(intervalid);
+    if(ports.indexOf(port) === -1){
+        ports.push(port);
+    }
+    let _console = JSON.parse(JSON.stringify(e));
+    // 主动推消息
+    intervalid = setInterval(()=>{
+        ports.forEach(item=>{
+            // item.postMessage({count,num:ports.length});
+            item.postMessage(count);
+        })
+        count++;
+    },2000);
+
+    // 接到消息去作相应的处理，
+    // port.onmessage = _e =>{
+    //     // fetch('daihaiqing.api',{
+    //     //     credentials: "include" 
+    //     // })
+    //     // .then(res => res.text())
+    //     // .then(res => {
+    //         ports.forEach(item=>{
+    //             item.postMessage(_console);
+    //         })
+    //     // })
+    // }
 }
+  

@@ -2,40 +2,11 @@
  * sevivceworker
  */
 
-// var xhr=new XMLHttpRequest();
-// // self.localStorage.wed = 'value';
 // console.error('inner',self);
 // self.clients.matchAll({includeUncontrolled:true}).then(function(clients) {
 //     // do something with your clients list
 //     console.error(clients.length);
-//     // clients.forEach(client => {
-//     //     // focused: true
-//     //     // frameType: "top-level"
-//     //     // id: "6c1467b2-7de9-4b82-bb79-10e66fa530b6"
-//     //     // type: "window"
-//     //     // url: "http://localhost:8080/#/"
-//     //     // visibilityState: "visible"
-//     //     // console.error(client);
-//     //     // setTimeout(_client=>{
-//     //         client.postMessage('payload');
-//     //     // }, 3000,client)
-//     // })
 //     var promise1 = new Promise(function(resolve, reject) {
-//         // xhr.onreadystatechange=function(){
-//         //     if(xhr.readyState ===4 ){
-//         //         if(xhr.status>=200 && xhr.status<300 || xhr.status===304){
-//         //             console.error(xhr.responseText);
-//         //             resolve('foo');
-//         //         }else{
-//         //             reject('fail');
-//         //             console.error("请求失败！");
-//         //         }
-
-//         //     }
-
-//         // };
-//         // xhr.open("get","haiqing.api",true);
-//         // xhr.send(null);
 //         setTimeout(function() {
 //           resolve('foo');
 //         }, 3000);
@@ -44,31 +15,13 @@
 //     promise1.then(function(value) {
 //         console.error(value);
 //         clients.forEach(client => {
-//             // focused: true
-//             // frameType: "top-level"
-//             // id: "6c1467b2-7de9-4b82-bb79-10e66fa530b6"
-//             // type: "window"
-//             // url: "http://localhost:8080/#/"
-//             // visibilityState: "visible"
-//             // console.error(client);
-//             // setTimeout(_client=>{
-//                 client.postMessage(value);
-//             // }, 3000,client)
+//             client.postMessage(value);
 //         })
 //     // expected output: "foo"
 //     },function(value){
 //         console.error(value);
 //         clients.forEach(client => {
-//             // focused: true
-//             // frameType: "top-level"
-//             // id: "6c1467b2-7de9-4b82-bb79-10e66fa530b6"
-//             // type: "window"
-//             // url: "http://localhost:8080/#/"
-//             // visibilityState: "visible"
-//             // console.error(client);
-//             // setTimeout(_client=>{
-//                 client.postMessage(value);
-//             // }, 3000,client)
+//             client.postMessage(value);
 //         })
 //     });
 // });
@@ -84,16 +37,9 @@
 // self.addEventListener('activate', event => {
 //     console.error('activate')
 // });
-// self.addEventListener('online', ()=>{
-//     console.log('online')
-// });
 // self.addEventListener('offline', ()=>{
-//     console.log('!!!!!!!!!!!!!!')
+//     console.error('!!!!!!!!!!!!!!')
 //     Notification.requestPermission().then(grant => {
-//         if (grant !== 'granted') {
-//             return;
-//         }
-
 //         const notification = new Notification("Hi，网络不给力哟", {
 //             body: '戴海青',
 //         });
@@ -104,45 +50,17 @@
 //     });
 // });
 
-// onconnect = function(e) {
-//   var port = e.ports[0];
 
-//   port.onmessage = function(e) {
-//     var workerResult = 'Result: ' + (e.data[0] + "  " + e.data[1]);
-//     console.error('net:',workerResult)
-//     port.postMessage(workerResult);
-//   }
-
-// }
-
-// const ports = [];
-
-// let abc = 1;
-// onconnect = e => {
-//   const port = e.ports[0]
-//   ports.push(port);
-//   // console.error(ports)
-//   port.onmessage = evt => {
-//         const request = new XMLHttpRequest();
-//         request.onreadystatechange=function(){
-//             if(request.readyState ===4 ){
-//                 console.error(request);
-//                 abc+=1;
-//                 if(abc%2 === 1){
-//                   ports.forEach(p => {
-//                     p.postMessage(abc);
-//                   })
-//                 }
-//             }
-//         };
-
-//       setInterval(()=>{
-//         request.open("get","haiqing.api",true);
-//         request.send(null);
-//       },2000);
-//   }
-// }
-
+// self.addEventListener('fetch', event => {
+//     const url = new URL(event.request.url);
+  
+//     console.error('url',url)
+//     // serve the cat SVG from the cache if the request is
+//     // same-origin and the path is '/dog.svg'
+//     if (url.origin == location.origin && url.pathname.endsWith('/dog.svg')) {
+//       event.respondWith(caches.match('cat.svg'));
+//     }
+// });
 
 
 /**
@@ -166,16 +84,21 @@
 /**
  * shareworker
  */
+let currents= [];
 
 let count = 0; // 可以看出是共享的
 let ports = [];
 let intervalid = null;
 onconnect = function(e) {
     var port = e.ports[0];
+    var current = e.currentTarget;
     clearInterval(intervalid);
     if(ports.indexOf(port) === -1){
         ports.push(port);
+        currents.push(current);
     }
+
+    console.error('name',self.name)
     let _console = JSON.parse(JSON.stringify(e));
     // 主动推消息
     intervalid = setInterval(()=>{

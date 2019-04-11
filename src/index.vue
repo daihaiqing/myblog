@@ -34,6 +34,16 @@
         },
         created(){
             this.active = this.$route.path;
+            // navigator.serviceWorker.register('./src/seviceworker.js')
+            // .then(registration => {
+            //     console.error('ServiceWorker 注册成功！');
+            //     console.error(registration);
+            // })
+            // .catch(err => console.error('ServiceWorker 注册失败: ', err));
+
+            // navigator.serviceWorker.addEventListener('message',data=>{
+            //     console.error('result:',data)
+            // });
         }
     }
 </script>

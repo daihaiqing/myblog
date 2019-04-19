@@ -27,7 +27,6 @@ export default {
             }else{
                 return data;
             }
-            // console.error(data);
         },
     },
     mounted(){

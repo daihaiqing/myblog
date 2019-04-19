@@ -27,6 +27,7 @@ module.exports = {
     output:{                    //输出编译后文件地址及文件名
         path: path.resolve(__dirname, 'dist'),
         filename,
+        globalObject: 'this'
     },
     plugins:[
         new HtmlWebpackPlugin({
@@ -96,6 +97,13 @@ module.exports = {
                 test: /.(jpg|png|gif|svg)$/,
                 use: ['url-loader?limit=8192&name=images/[name].[hash].[ext]'],//还可以通过 name 字段来指 超过limit 的图片打包成base64
             },
+            {
+                test: /seviceworker\.js$/, //以seviceworker.js结尾的文件将被worker-loader加载
+                use: {
+                    loader: 'worker-loader',
+                    options: { inline: true }
+                }
+            }
         ]
     },
     performance: {

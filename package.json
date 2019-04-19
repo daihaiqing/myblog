@@ -48,6 +48,7 @@
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
-    "webpack-encoding-plugin": "^0.2.1"
+    "webpack-encoding-plugin": "^0.2.1",
+    "worker-loader": "^2.0.0"
   }
 }

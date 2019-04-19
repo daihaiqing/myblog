@@ -67,59 +67,61 @@
  * webworker
  */
 
-// onmessage = function(e) {//接收主线程的信息 messageevent
-//     console.log('Message received from main script');
-//     var workerResult = 'Result: ' + (e.data.name) + ',self:' + self.name;
-//     console.log('Posting message back to main script');
-//     // postMessage(workerResult);// 处理完以后返回给主线程的信息
-//     postMessage(location.href);
-// }
+onmessage = function(e) {//接收主线程的信息 messageevent
+    console.log('Message received from main script');
+    var workerResult = 'Result: ' + (e.data.name) + ',self:' + self.name;
+    console.log('Posting message back to main script');
+    // postMessage(workerResult);// 处理完以后返回给主线程的信息
+    postMessage(location.href);
+}
 
-// // setTimeout(()=>{
-// //     postMessage('我要结束了');
-// //     self.close();
-// // },10000)
-
+// setTimeout(function(){
+//     postMessage('我要结束了');
+//     self.close();
+// },10000)
+// postMessage({
+//     value: '工作线程向主线程发送消息'
+// });
 
 /**
  * shareworker
  */
-let currents= [];
+// let currents= [];
 
-let count = 0; // 可以看出是共享的
-let ports = [];
-let intervalid = null;
-onconnect = function(e) {
-    var port = e.ports[0];
-    var current = e.currentTarget;
-    clearInterval(intervalid);
-    if(ports.indexOf(port) === -1){
-        ports.push(port);
-        currents.push(current);
-    }
+// let count = 0; // 可以看出是共享的
+// let ports = [];
+// let intervalid = null;
+// onconnect = function(e) {
+//     var port = e.ports[0];
+//     var current = e.currentTarget;
+//     clearInterval(intervalid);
+//     if(ports.indexOf(port) === -1){
+//         ports.push(port);
+//         currents.push(current);
+//     }
 
-    console.error('name',self.name)
-    let _console = JSON.parse(JSON.stringify(e));
-    // 主动推消息
-    intervalid = setInterval(()=>{
-        ports.forEach(item=>{
-            // item.postMessage({count,num:ports.length});
-            item.postMessage(count);
-        })
-        count++;
-    },2000);
+//     console.error('name',self.name)
+//     let _console = JSON.parse(JSON.stringify(e));
+//     // 主动推消息
+//     intervalid = setInterval(()=>{
+//         ports.forEach(item=>{
+//             // item.postMessage({count,num:ports.length});
+//             item.postMessage(count);
+//         })
+//         count++;
+//     },2000);
 
-    // 接到消息去作相应的处理，
-    // port.onmessage = _e =>{
-    //     // fetch('daihaiqing.api',{
-    //     //     credentials: "include" 
-    //     // })
-    //     // .then(res => res.text())
-    //     // .then(res => {
-    //         ports.forEach(item=>{
-    //             item.postMessage(_console);
-    //         })
-    //     // })
-    // }
-}
+//     // 接到消息去作相应的处理，
+//     // port.onmessage = _e =>{
+//     //     // fetch('daihaiqing.api',{
+//     //     //     credentials: "include" 
+//     //     // })
+//     //     // .then(res => res.text())
+//     //     // .then(res => {
+//     //         ports.forEach(item=>{
+//     //             item.postMessage(_console);
+//     //         })
+//     //     // })
+//     // }
+// }
   

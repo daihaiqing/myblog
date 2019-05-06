@@ -85,6 +85,9 @@ let intervalid = null;
 onconnect = function(e) {
     var port = e.ports[0];
     var current = e.currentTarget;
+    port.onmessage = function(){
+        console.error(1231);
+    }
     console.error(port);
     console.error(current);
     console.error(self.name);

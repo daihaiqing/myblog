@@ -6,7 +6,8 @@
                 <li :class="{active:active === '/'}"><router-link to="/">首页</router-link></li>
                 <li :class="{active:active === '/start'}"><router-link to="/start">建站</router-link></li>
                 <li :class="{active:active === '/frontFaq'}"><router-link to="/frontFaq">前端faq</router-link></li>
-                <li :class="{active:active === '/worker'}"><router-link to="/worker">关于worker</router-link></li>
+                <li :class="{active:active === '/worker'}"><router-link to="/worker">worker</router-link></li>
+                <li :class="{active:active === '/messageEvent'}"><router-link to="/messageEvent">messageEvent</router-link></li>
                 <li :class="{active:active === '/about'}"><router-link to="/about">关于</router-link></li>
             </ul>
         </div>
@@ -14,7 +15,7 @@
             <router-view></router-view>
         </div>
     </div>
-    
+    <!-- messageEvent -->
 </template>
 
 <script>
@@ -35,16 +36,6 @@
         },
         created(){
             this.active = this.$route.path;
-            // navigator.serviceWorker.register('./src/seviceworker.js')
-            // .then(registration => {
-            //     console.error('ServiceWorker 注册成功！');
-            //     console.error(registration);
-            // })
-            // .catch(err => console.error('ServiceWorker 注册失败: ', err));
-
-            // navigator.serviceWorker.addEventListener('message',data=>{
-            //     console.error('result:',data)
-            // });
         }
     }
 </script>

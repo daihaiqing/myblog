@@ -27,6 +27,10 @@ export default new Router({
             component: r => require.ensure([], () => r(require('./src/views/FrontToEnd-faq.vue')), 'FrontToEnd-faq')
         },
         {
+            path:'/messageEvent',
+            component: r => require.ensure([], () => r(require('./src/views/messageEvent.vue')), 'messageEvent')
+        },
+        {
             path:'/start',
             component: r => require.ensure([], () => r(require('./src/views/start.vue')), 'start')
         }

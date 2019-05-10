@@ -82,10 +82,11 @@ let currents= [];
 let count = 0; // 可以看出是共享的
 let ports = [];
 let intervalid = null;
+console.error(self);
 onconnect = function(e) {
     var port = e.ports[0];
     var current = e.currentTarget;
-    port.onmessage = function(){
+    port.onmessage = function(event){
         console.error(1231);
     }
     console.error(port);

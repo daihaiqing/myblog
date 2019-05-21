@@ -59,7 +59,9 @@
                     return ratio;
                 };
 
-                // console.error(detectZoom());
+                
+                console.error(detectZoom())
+                window.onresize = () => console.error(detectZoom());
             }
         </script>
         <link rel="shortcut icon"type="image/x-icon"href="./favicon.ico" />
@@ -70,5 +72,5 @@
             <app></app> 
         </div> 
     </body>
-    <script type="text/javascript" src="./addworker.js"></script>
+    <!-- <script type="text/javascript" src="./addworker.js"></script> -->
 </html>

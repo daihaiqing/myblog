@@ -1,5 +1,6 @@
 <template>
     <div>
+      <p @click="go">go about</p>
     </div>
 </template>
 
@@ -12,6 +13,9 @@ export default {
       }
   },
   methods:{
+    go(){
+      this.$router.push({name:'about'})
+    }
   },
   mounted(){
   }

@@ -4,6 +4,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const EncodingPlugin = require('webpack-encoding-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');//保留最新包
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const fs = require("fs");
 
 // 引入css 单独打包插件
 // const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -11,6 +12,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let ENV = require('minimist')(process.argv.slice(2)).env;
 let filename = '';
+
+fs.writeFileSync("./message.js",`export default {ENV:'./'}`);
 
 var drop_console = false;
 if(ENV === "development") {

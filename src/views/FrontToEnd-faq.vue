@@ -1,6 +1,9 @@
 <template>
     <div>
       <p @click="go">go about</p>
+      <div class="router">
+          <router-view></router-view>
+      </div>
     </div>
 </template>
 

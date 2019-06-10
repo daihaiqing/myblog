@@ -36,7 +36,6 @@ recordPlay.prototype = {
             </div>
         </div>
         `;
-console.error('this.$audio',this.$audio);
         this.$audio.innerHTML= record_html;
         _this.bindEvent(); 
     },

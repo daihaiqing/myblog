@@ -2,6 +2,7 @@
     <div id="test" ref="aggregateNotifContainer">
        messageevent
        <p id="testnone">eetert</p>
+       <img src="../../images/testwebp/test.webp">
     </div>
 </template>
 

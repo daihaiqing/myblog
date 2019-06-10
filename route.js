@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import origin from "./message.js";
+// import origin from "./message.js";
 // import homePage from './src/views/home.vue';
 // import aboutPage from './src/views/about.vue';
 // import start from './src/views/start.vue';
 // import frontFaq from './src/views/FrontToEnd-faq.vue';
 
+
+const origin = {
+    ENV:'./'
+}
 
 //懒加载 按需加载
 Vue.use(Router);

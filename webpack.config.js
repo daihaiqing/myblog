@@ -7,13 +7,17 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const fs = require("fs");
 
 // 引入css 单独打包插件
-// const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let ENV = require('minimist')(process.argv.slice(2)).env;
 let filename = '';
 
-fs.writeFileSync("./message.js",`export default {ENV:'./'}`);
+
+let originpath = {
+    development:'./',
+    production:'https://www.tangcusuan.com/'
+}
 
 var drop_console = false;
 if(ENV === "development") {
@@ -25,12 +29,15 @@ if(ENV === "development") {
     drop_console = true;
 }
 
+console.error(originpath[ENV]);
+fs.writeFileSync("./message.js",`export default {ENV:'${originpath[ENV]}'}`);
 module.exports = {
     entry: './main.js', //项目入口文件
     output:{                    //输出编译后文件地址及文件名
         path: path.resolve(__dirname, 'dist'),
         filename,
-        globalObject: 'this'
+        globalObject: 'this',
+        chunkFilename:'js/[name]-[chunkhash:8].js'
     },
     plugins:[
         new HtmlWebpackPlugin({
@@ -53,24 +60,36 @@ module.exports = {
             }
         ),
         // new ExtractTextPlugin("./sdsdsd/[name].css"),
+
         new MiniCssExtractPlugin({// 抽取样式
             filename: "css/[name].[chunkhash:8].css", // 打包出来的主文件名
             chunkFilename: "css/[name].[chunkhash:8].css" // 异步模块，或懒加载模块 命名
+            // publicPath:'test/css/main.css'
         }),
     ],
     optimization: {
-        minimizer: [new UglifyJsPlugin({
-            uglifyOptions: {
-                beautify: false,// 最紧凑的输出
-                comments: false, // 删除所有的注释
-                compress: {
-                    warnings: false,// 在UglifyJs删除没有用到的代码时不输出警告
-                    drop_console,// 删除所有的 `console` 语句// 还可以兼容ie浏览器
-                    collapse_vars: true,// 内嵌定义了但是只用到一次的变量
-                    reduce_vars: true,// 提取出出现多次但是没有定义成变量去引用的静态值
+        // minimizer: [new UglifyJsPlugin({ // TODO  为了测试 暂时删去
+        //     uglifyOptions: {
+        //         beautify: false,// 最紧凑的输出
+        //         comments: false, // 删除所有的注释
+        //         compress: {
+        //             warnings: false,// 在UglifyJs删除没有用到的代码时不输出警告
+        //             drop_console,// 删除所有的 `console` 语句// 还可以兼容ie浏览器
+        //             collapse_vars: true,// 内嵌定义了但是只用到一次的变量
+        //             reduce_vars: true,// 提取出出现多次但是没有定义成变量去引用的静态值
+        //         }
+        //     }
+        // })],
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true
                 }
             }
-        })],
+        }
     },
     resolve: {
         alias: { 'vue$': 'vue/dist/vue.common.js' }, //解决 [Vue warn]: Failed to mount component: template or render function not defined.
@@ -81,8 +100,6 @@ module.exports = {
     },
     module:{
         rules: [
-            {test: /\.js$/,loader: 'babel-loader',exclude: /node_modules/},
-            {test: /\.vue$/,loader: 'vue-loader'},
             {
                 test:/\.(sa|c|sc)ss$/,
                 use:[
@@ -94,18 +111,16 @@ module.exports = {
                     },
                     'css-loader',
                     'sass-loader'
-                ]
+                ],
+            },
+            {test: /\.js$/,loader: 'babel-loader',exclude: /node_modules/},
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
             },
             {
-                test: /.(jpg|png|gif|svg)$/,
+                test: /.(jpg|png|gif|svg|webp)$/,
                 use: ['url-loader?limit=8192&name=images/[name].[hash].[ext]'],//还可以通过 name 字段来指 超过limit 的图片打包成base64
-            },
-            {
-                test: /seviceworker\.js$/, //以seviceworker.js结尾的文件将被worker-loader加载
-                use: {
-                    loader: 'worker-loader',
-                    options: { inline: true }
-                }
             }
         ]
     },

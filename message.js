@@ -1,1 +1,1 @@
-export default {ENV:'https://www.tangcusuan.com/'}
+export default {ENV:'./'}

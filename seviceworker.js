@@ -2,45 +2,60 @@
  * sevivceworker
  */
 
-// console.error('inner',self);
-// self.clients.matchAll({includeUncontrolled:true}).then(function(clients) {
-//     // do something with your clients list
-//     console.error(clients.length);
-//     // var promise1 = new Promise(function(resolve, reject) {
-//     //     setTimeout(function() {
-//     //       resolve('foo');
-//     //     }, 3000);
-//     // });
+console.error('inner',self);
+self.clients.matchAll({includeUncontrolled:true}).then(function(clients) {
+    // do something with your clients list
+    console.error('length',clients.length);
+    // var promise1 = new Promise(function(resolve, reject) {
+    //     setTimeout(function() {
+    //       resolve('foo');
+    //     }, 3000);
+    // });
       
-//     // promise1.then(function(value) {
-//     //     console.error(value);
-//     //     clients.forEach(client => {
-//     //         client.postMessage(value);
-//     //     })
-//     // // expected output: "foo"
-//     // },function(value){
-//         console.error('value');
-//         clients.forEach(client => {
-//             client.postMessage(clients.length);
-//         })
-//     // });
-// });
+    // promise1.then(function(value) {
+    //     console.error(value);
+    //     clients.forEach(client => {
+    //         client.postMessage(value);
+    //     })
+    // // expected output: "foo"
+    // },function(value){
+        console.error('value');
+        clients.forEach(client => {
+            client.postMessage(self.localStorage);
+        })
+    // });
+});
+self.addEventListener('message', function(event){
+    console.error("SW Received Message: " + event.data);
+});
+self.addEventListener('install', event => {
+    // event.waitUtil 用于在安装成功之前执行一些预装逻辑
+    // 但是建议只做一些轻量级和非常重要资源的缓存，减少安装失败的概率
+    // 安装成功后 ServiceWorker 状态会从 installing 变为 installed
+    console.error('install');
+    // console.error('install_inner',);
+    event.waitUntil(self.skipWaiting());
+});
 
-// self.addEventListener('install', event => {
-//     // event.waitUtil 用于在安装成功之前执行一些预装逻辑
-//     // 但是建议只做一些轻量级和非常重要资源的缓存，减少安装失败的概率
-//     // 安装成功后 ServiceWorker 状态会从 installing 变为 installed
-//     console.error('install');
-//     event.waitUntil(self.skipWaiting());
-// });
+self.addEventListener('activate', event => {
+    console.error('activate');
+});
+self.addEventListener('offline', ()=>{
+    console.error('!!!!!!!!!!!!!!')
+});
 
-// self.addEventListener('activate', event => {
-//     console.error('activate');
-// });
-// self.addEventListener('offline', ()=>{
-//     console.error('!!!!!!!!!!!!!!')
-// });
-
+// setTimeout(()=>{
+    console.log('navigator',self.navigator.serviceWorker);
+    console.error('我要注销了');
+    self.registration.unregister();
+    // console.log('navigator',navigator.serviceWorker);
+    // navigator.serviceWorker.getRegistrations()
+    // .then(function(registrations) {
+    //     for(let registration of registrations) {  
+    //         registration.unregister();
+    //     }
+    // });
+// },10000);
 
 // self.addEventListener('fetch', event => {
 //     const url = new URL(event.request.url);
@@ -77,48 +92,48 @@
 /**
  * shareworker
  */
-let currents= [];
+// let currents= [];
 
-let count = 0; // 可以看出是共享的
-let ports = [];
-let intervalid = null;
-console.error(self);
-onconnect = function(e) {
-    var port = e.ports[0];
-    var current = e.currentTarget;
-    port.onmessage = function(event){
-        console.error(1231);
-    }
-    console.error(port);
-    console.error(current);
-    console.error(self.name);
-    clearInterval(intervalid);
-    if(ports.indexOf(port) === -1){
-        ports.push(port);
-        // currents.push(current);
-    }
+// let count = 0; // 可以看出是共享的
+// let ports = [];
+// let intervalid = null;
+// console.error(self);
+// onconnect = function(e) {
+//     var port = e.ports[0];
+//     var current = e.currentTarget;
+//     port.onmessage = function(event){
+//         console.error(1231);
+//     }
+//     console.error(port);
+//     console.error(current);
+//     console.error(self.name);
+//     clearInterval(intervalid);
+//     if(ports.indexOf(port) === -1){
+//         ports.push(port);
+//         // currents.push(current);
+//     }
 
-    // let _console = JSON.parse(JSON.stringify(e));
-    // 主动推消息
-    intervalid = setInterval(()=>{
-        ports.forEach(item=>{
-            // item.postMessage({count,num:ports.length});
-            item.postMessage(count);
-        })
-        count++;
-    },2000);
+//     // let _console = JSON.parse(JSON.stringify(e));
+//     // 主动推消息
+//     intervalid = setInterval(()=>{
+//         ports.forEach(item=>{
+//             // item.postMessage({count,num:ports.length});
+//             item.postMessage(count);
+//         })
+//         count++;
+//     },2000);
 
-    // 接到消息去作相应的处理，
-    // port.onmessage = _e =>{
-    //     // fetch('daihaiqing.api',{
-    //     //     credentials: "include" 
-    //     // })
-    //     // .then(res => res.text())
-    //     // .then(res => {
-    //         ports.forEach(item=>{
-    //             item.postMessage(_console);
-    //         })
-    //     // })
-    // }
-}
+//     // 接到消息去作相应的处理，
+//     // port.onmessage = _e =>{
+//     //     // fetch('daihaiqing.api',{
+//     //     //     credentials: "include" 
+//     //     // })
+//     //     // .then(res => res.text())
+//     //     // .then(res => {
+//     //         ports.forEach(item=>{
+//     //             item.postMessage(_console);
+//     //         })
+//     //     // })
+//     // }
+// }
   

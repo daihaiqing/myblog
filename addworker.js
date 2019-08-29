@@ -2,20 +2,25 @@
  * sevivceworker
  */
 
-// if ('serviceWorker' in navigator) {
-//     console.error('window',window)
-//     navigator.serviceWorker.register('./seviceworker.js')
-//         .then(registration => {
-//             console.error('ServiceWorker 注册成功！');
-//             console.error(registration);
-//         })
-//         .catch(err => console.error('ServiceWorker 注册失败: ', err));
+if ('serviceWorker' in navigator) {
+    console.error('window',window)
+    navigator.serviceWorker.register('./seviceworker.js')
+        .then(registration => {
+            console.error('ServiceWorker 注册成功！');
+            console.error(registration);
+        })
+        .catch(err => console.error('ServiceWorker 注册失败: ', err));
 
-//     navigator.serviceWorker.addEventListener('message',data=>{
-//         console.error('result:',data)
-//     });
-//     // fetch('./images/tangcusuan.png').then(e=>e.text()).then(e=>console.error(e))
-// }
+    navigator.serviceWorker.addEventListener('message',data=>{
+        console.error('result:',data)
+    });
+    setTimeout(()=>{
+        console.error(123);
+        navigator.serviceWorker.controller.postMessage("Client 1 says 撒大声地阿斯达萨德");
+    },3000)
+    
+    // fetch('./images/tangcusuan.png').then(e=>e.text()).then(e=>console.error(e))
+}
 
 
 /**
@@ -75,30 +80,30 @@
  * shareworker
  */
 
-var worker = new SharedWorker('./seviceworker.js','test1');
+// var worker = new SharedWorker('./seviceworker.js','test1');
 
-var worker2 = new SharedWorker('./seviceworker.js','test2');
+// var worker2 = new SharedWorker('./seviceworker.js','test2');
 
-// console.error(worker.port)
-worker.port.onmessage=function(e){
-    console.error('from worker1',e)
-}
+// // console.error(worker.port)
+// worker.port.onmessage=function(e){
+//     console.error('from worker1',e)
+// }
 
-worker2.port.onmessage=function(e){
-    console.error('2',e)
-}
+// worker2.port.onmessage=function(e){
+//     console.error('2',e)
+// }
 
 
-setInterval(()=>{
-    worker.port.postMessage({
-        key:'start'
-    })
-},1000);
+// setInterval(()=>{
+//     worker.port.postMessage({
+//         key:'start'
+//     })
+// },1000);
 
-worker.onerror=function(e){
-    console.error('worker报错啦')
-    console.error(e);
-};
+// worker.onerror=function(e){
+//     console.error('worker报错啦')
+//     console.error(e);
+// };
 
 // setTimeout(()=>{
 //     console.error('我是worker1,我要结束了');

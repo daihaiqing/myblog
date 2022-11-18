@@ -25,7 +25,7 @@
     "extract-css-chunks-webpack-plugin": "^4.5.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "https-proxy-agent": ">=2.2.0",
     "lodash.clonedeep": "^4.5.0",
     "mime": ">=1.4.1",
@@ -52,7 +52,7 @@
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
-    "webpack-encoding-plugin": "^0.2.1",
+    "webpack-encoding-plugin": "^0.3.1",
     "worker-loader": "^2.0.0"
   }
 }
